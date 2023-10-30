@@ -6,8 +6,8 @@
 #include "bayesianNet.h"
 #include <vector>
 
-#define FILE "E:\\IA\\Bayesian-Network-1\\Pruebas\\ex1.txt"
-#define EDGES "E:\\IA\\Bayesian-Network-1\\Pruebas\\ex1_edges.txt"
+#define FILE "Pruebas\\ex1.txt"
+#define EDGES "Pruebas\\ex1_edges.txt"
 
 int main()
 {
@@ -123,7 +123,7 @@ int main()
     net.printGraph();
 
     tokens.clear();
-    std::string prop = "light,no,delayed,miss";
+    std::string prop = "heavy,yes,delayed,attend";
 
     ss.clear();   // Limpiar el estado de ss
     ss.str(prop); // Ajustar el contenido de ss a la línea actual
@@ -150,7 +150,7 @@ int main()
 
     std::cout << "##################################################################" << std::endl;
 
-    std::string prop2 = "light,,delayed,miss";
+    std::string prop2 = "x,no,,miss";
     tokens.clear();
     ss.clear();   // Limpiar el estado de ss
     ss.str(prop2); // Ajustar el contenido de ss a la línea actual
@@ -164,5 +164,5 @@ int main()
     }
 
 
-    std::cout << net.probabilityInc(tokens) << std::endl;
+    std::cout << net.resolveX(tokens) << std::endl;
 }

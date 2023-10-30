@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <numeric>
 #include "node.h"
 
 class BayesianNet
@@ -22,9 +23,10 @@ public:
     void printProbabilities(int index);
     void printGraph();
     float probability(std::vector<std::string> tokens);
-    std::string probabilityInc(std::vector<std::string> tokens);
+    float probabilityInc(std::vector<std::string> tokens);
     void addParent(int index, int parent);
     bool isContained(std::vector<std::string> tokens, std::string token);
+    float resolveX(std::vector<std::string> tokens);
 
 
 private:

@@ -20,7 +20,7 @@ int BayesianNet::getNodeN(std::string name)
             return i;
         }
     }
-    EXIT_FAILURE;
+    return EXIT_FAILURE;
 }
 void BayesianNet::addEdge(int v, int w)
 {
@@ -86,7 +86,7 @@ float BayesianNet::probability(std::vector<std::string> tokens)
     return totalProb;
 }
 
-std::string BayesianNet::probabilityInc(std::vector<std::string> tokens)
+float BayesianNet::probabilityInc(std::vector<std::string> tokens)
 {
 
     float totalProb = 1;
@@ -111,24 +111,20 @@ std::string BayesianNet::probabilityInc(std::vector<std::string> tokens)
         else
         {
             tokensNodo[i].push_back(tokens[i]);
-            std::cout << "Tokens: " << tokensNodo[i].back() << std::endl;
         }
     }
-
+    tokensFinales.resize(cantResolv);
     for (int i = 0; i < cantResolv; i++)
     {
         for (int j = 0; j < nodes.size(); j++)
         {
             if (tokensNodo[j].size() > 1)
             {
-                std::cout << "entro acas" << std::endl;
                 tokensFinales[i].push_back(tokensNodo[j].front());
                 tokensNodo[j].erase(tokensNodo[j].begin());
             }
             else
             {
-                                std::cout << "entro acas2" << std::endl;
-
                 tokensFinales[i].push_back(tokensNodo[j].front());
             }
         }
@@ -137,8 +133,86 @@ std::string BayesianNet::probabilityInc(std::vector<std::string> tokens)
     for(int x=0;x<tokensFinales.size();x++){
             probas += probability(tokensFinales[x]);
     }
-    std::cout << "Probabilidad: " << probas << std::endl;
-    return "";
+    std::cout << "Probabilidad Final: a[" << probas << "]"<< std::endl;
+    return probas;
+}
+float BayesianNet::resolveX(std::vector<std::string> tokens){
+
+    std::vector<std::vector<std::string>> tokensFinales;
+    std::vector<std::vector<std::string>> tokensNodo;
+    tokensNodo.resize(nodes.size());
+    int cantResolv = 0;
+
+    for (int i = 0; i < nodes.size(); i++)
+    {
+        std::cout << "Resolviendo X: " << nodes[i].getName() << " con " << nodes[i].cParents() << " padres" << std::endl;
+
+        if (tokens[i] == "x")
+        {
+            std::set<std::string> uniqueLastElements = nodes[i].uniqueElements(nodes[i].getProbabilities());
+            for (auto x : uniqueLastElements)
+            {
+                tokensNodo[i].push_back(x);
+            }
+            cantResolv = tokensNodo[i].size();
+        }
+        else
+        {
+            tokensNodo[i].push_back(tokens[i]);
+        }
+    }
+
+    tokensFinales.resize(cantResolv);
+    for (int i = 0; i < cantResolv; i++)
+    {
+        for (int j = 0; j < nodes.size(); j++)
+        {
+            if (tokensNodo[j].size() > 1)
+            {
+                tokensFinales[i].push_back(tokensNodo[j].front());
+                tokensNodo[j].erase(tokensNodo[j].begin());
+            }
+            else
+            {
+                tokensFinales[i].push_back(tokensNodo[j].front());
+            }
+        }
+    }
+    std::vector<float> propsFinales;
+    for(int i = 0 ; i < tokensFinales.size(); i++){
+        propsFinales.push_back(probabilityInc(tokensFinales[i]));
+    }
+    std::vector<float> propsEstandarizados;
+    float a = 1/std::accumulate(propsFinales.begin(), propsFinales.end(), 0.0f);
+
+
+
+    std::cout << "a <" ;
+    for(int i=0; i<propsFinales.size();i++)
+    {
+        std::cout << propsFinales[i];
+        if(i != propsFinales.size()-1)
+            std::cout << ",";
+    }
+    std::cout << ">" << std::endl;
+
+   
+
+    std::cout << "<" ;
+    for(int i=0; i<propsFinales.size();i++)
+    {
+        std::cout << a * propsFinales[i];
+        if(i != propsFinales.size()-1)
+            std::cout << ",";
+    }
+    std::cout << ">" << std::endl;
+
+    
+    
+    
+    
+    return 0;
+
 }
 bool BayesianNet::isContained(std::vector<std::string> tokens, std::string token)
 {
