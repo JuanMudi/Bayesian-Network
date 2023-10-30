@@ -185,6 +185,8 @@ float BayesianNet::resolveX(std::vector<std::string> tokens){
     std::vector<float> propsEstandarizados;
     float a = 1/std::accumulate(propsFinales.begin(), propsFinales.end(), 0.0f);
 
+    std::cout << "Usando a: " << a << std::endl;
+
 
 
     std::cout << "a <" ;

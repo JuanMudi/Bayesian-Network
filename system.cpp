@@ -6,8 +6,8 @@
 #include "bayesianNet.h"
 #include <vector>
 
-#define FILE "Pruebas\\ex1.txt"
-#define EDGES "Pruebas\\ex1_edges.txt"
+#define FILE "Pruebas\\ex2.txt"
+#define EDGES "Pruebas\\ex2_edges.txt"
 
 int main()
 {
@@ -123,7 +123,7 @@ int main()
     net.printGraph();
 
     tokens.clear();
-    std::string prop = "heavy,yes,delayed,attend";
+    std::string prop = "sunny,start,sad,vacation";
 
     ss.clear();   // Limpiar el estado de ss
     ss.str(prop); // Ajustar el contenido de ss a la línea actual
@@ -150,7 +150,7 @@ int main()
 
     std::cout << "##################################################################" << std::endl;
 
-    std::string prop2 = "x,no,,miss";
+    std::string prop2 = "sunny,start,x, ";
     tokens.clear();
     ss.clear();   // Limpiar el estado de ss
     ss.str(prop2); // Ajustar el contenido de ss a la línea actual
