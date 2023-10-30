@@ -4,24 +4,29 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <list> 
+#include <list>
+#include <set>
 #include "node.h"
 
-class BayesianNet {
+class BayesianNet
+{
 public:
     Node getNodeI(int index);
     int getNodeN(std::string name);
     void addNode(Node node);
-    void addEdge(int v, int w); 
+    void addEdge(int v, int w);
     void removeNode(int index);
     int size();
     void print();
     void createEdges(int n);
     void printProbabilities(int index);
     void printGraph();
-    std::string probability(std::vector<std::string> tokens);
+    float probability(std::vector<std::string> tokens);
+    std::string probabilityInc(std::vector<std::string> tokens);
     void addParent(int index, int parent);
-    
+    bool isContained(std::vector<std::string> tokens, std::string token);
+
+
 private:
     std::vector<Node> nodes;
     std::vector<std::list<int>> edges;

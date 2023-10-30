@@ -112,3 +112,16 @@ float Node::findProbI(std::string prop)
     }
     return 0;
 }
+std::set<std::string> Node::uniqueElements(DataTable props){
+
+    std::set<std::string> uniqueLastElements;
+
+    for (const DataRow& row : props) {
+        if (!row.first.empty()) {
+            uniqueLastElements.insert(row.first.back());
+        }
+    }
+    return uniqueLastElements;
+
+}
+

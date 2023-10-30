@@ -105,10 +105,9 @@ int main()
         }
         net.addEdge(net.getNodeN(tokens[0]), net.getNodeN(tokens[1]));
 
-
         int index = net.getNodeN(tokens[1]);
         int index2 = net.getNodeN(tokens[0]);
-        net.addParent(index,index2);   
+        net.addParent(index, index2);
 
         std::cout << "Agregando arista entre " << tokens[0] << " y " << tokens[1] << std::endl;
         tokens.clear();
@@ -129,18 +128,41 @@ int main()
     ss.clear();   // Limpiar el estado de ss
     ss.str(prop); // Ajustar el contenido de ss a la línea actual
 
-        // Tokenizar la línea
-        while (std::getline(ss, token, ','))
-        {
-            token.erase(0, token.find_first_not_of(" "));
-            token.erase(token.find_last_not_of(" ") + 1);
-            tokens.push_back(token);
-        }
-    
+    // Tokenizar la línea
+    while (std::getline(ss, token, ','))
+    {
+        token.erase(0, token.find_first_not_of(" "));
+        token.erase(token.find_last_not_of(" ") + 1);
+        tokens.push_back(token);
+    }
+
     std::cout << "\n##################################################################" << std::endl;
 
     std::cout << "SOLUCIONANDO RED BAYESIANA SIN INCOGNITAS" << std::endl;
 
     std::cout << "##################################################################" << std::endl;
     std::cout << net.probability(tokens) << std::endl;
-    } 
+
+
+    std::cout << "\n##################################################################" << std::endl;
+
+    std::cout << "SOLUCIONANDO RED BAYESIANA CON INCOGNITAS" << std::endl;
+
+    std::cout << "##################################################################" << std::endl;
+
+    std::string prop2 = "light,,delayed,miss";
+    tokens.clear();
+    ss.clear();   // Limpiar el estado de ss
+    ss.str(prop2); // Ajustar el contenido de ss a la línea actual
+
+    // Tokenizar la línea
+    while (std::getline(ss, token, ','))
+    {
+        token.erase(0, token.find_first_not_of(" "));
+        token.erase(token.find_last_not_of(" ") + 1);
+        tokens.push_back(token);
+    }
+
+
+    std::cout << net.probabilityInc(tokens) << std::endl;
+}
